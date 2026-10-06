@@ -1,0 +1,127 @@
+//////////////////////////////////////////////////////////////////
+//	 m4 rules			 			//
+// Version 0.0_2.12  July 22, 2025				//
+// DRM Section 5.7.31			   			//
+//////////////////////////////////////////////////////////////////
+
+// v2.10:  m4 fill rules added
+// m4_fill removed here since m4 fill rules have larger minimum value:
+//   m4_fill minimum width is 0.3 um
+//   m4_fill minimum spacing is 0.03 um 
+//   enclosure rules are not relevant since m4_fill cannot overlap via3 or via4
+//   Also, removing the fill shapes from these checks will speed processing.
+
+rule CDR.m4.1 {
+	caption "CDR: Min width of met4: 0.30 um"
+	inte m4_dg -lt 0.300 -output region
+}
+
+rule CDR.m4.2 {
+	caption "CDR: Min spacing/notch of met4: 0.30 um"
+	exte m4_dg -lt 0.300 -single_point -output region
+}
+
+rule CDR.m4.3 {
+	caption "CDR: Min enclosure of via3 by met4: 0.065 um"
+	enc via3 m4_dg -lt 0.065 -output region
+	edge_select -inside via3 m4_dg ;  // finds 0.0 enc
+}
+
+rule CDR.m4.4a {
+	caption "CDR: Min met4 area: 0.240 sq um"
+	area m4_dg -lt 0.240
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Spacing rules:  Huge met4 and regular met4 
+// 	huge_met4: met4 with width > 3.0
+//
+// See m1 rules for methodology description
+// 
+// min spacing (met4 attached to huge_met4):  0.40
+// min spacing HUGE to met4:  0.40
+// min spacing met4 to met4:  0.30  
+
+NOT m4_dg huge_met4 met4_not_huge ;
+size huge_met4 -by 0.28  -inside_of m4_dg  -outputlayer huge_met4_040
+AND met4_not_huge huge_met4_040 met4_huge_and ;
+select -touch met4_huge_and huge_met4 -outputlayer met4_touching_huge
+
+rule CDRW.m4.5a {
+	caption "CDRW: Min spacing of huge met4 (width > 3.0 um) to narrow met4,"
+	caption "including features extending 0.28 um into narrow met4: 0.40 um"
+	caption "(rule not checked over non-huge m4_dg features)"
+	exte met4_touching_huge m4_dg -lt 0.40 -single_point -output region
+}
+
+rule CDRW.m4.5b {
+	caption "CDRW: Min spacing of huge_met4 to met4 excluding features checked by m4.3c: 0.40 um"
+	exte huge_met4 m4_dg -lt 0.40 -single_point -output region
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+rule CDR.m4.7 {
+	caption "CDR: Min area of met4 holes: 0.200 sq um"
+	holes met4 -outputlayer m4.7_a
+	area m4.7_a -lt 0.200
+}
+
+// NOTE:  rule m4.pd.1 moved to density file and renamed m4.local.min
+
+
+#IFDEF CU
+	rule m4.11 {
+	caption "CU Flow - Max width of met4: 10.0 um"
+	with_width m4_dg -gt 10.0
+	}
+
+	rule m4.12 {
+	  caption "CU Flow - Add slots and remove vias and contacts if met4 wider than > 10.00"
+	  with_width m4_dg -gt 10.00 ;
+	}
+
+	rule m4.15 {
+	caption "CU Flow - Min enclosure of via3 by met4: 0.06 um" 
+	enc via3 m4_dg -lt 0.060 -output region
+	edge_select via3 m4_dg ;  // finds 0.0 enc
+	}
+
+	rule m4.16 {
+	caption "CU Flow - Min enclosure of pad by met4: 0.85 um" 
+	enc pad m4_dg -lt 0.850 -output region
+	}
+
+// CU met4 Density
+
+// rules m4.13, m4.14, m4.14a 
+//	 "Max pattern density (PD) of met4: 0.77"
+//	 "met4 PD window size == 50.0 um"
+//	 "met4 PD window step == 25.0 um"
+
+// These rules specify "met4" and not met4 oxide, so do not use the sized met4 
+
+  rule m4.13 {
+ 	caption "m4.13: Max pattern density (PD) of met4 (CU): 0.77"
+	caption "m4.14: met4 PD window size 5 um"
+	caption "m4.14a: met4 PD window step 25 um"
+	caption "  rdb file:  m4.13.rdb"
+	density met4 -gt 0.77 -window 50 -step 25  -rdb "m4.13.rdb"
+  }
+
+#ENDIF  // ifndef CU
+
+
+// *****************************************************************************************
+// met4 Recommended Chip-Level Density rules - Obsolete and Removed
+
+//  Algorithm should flag errors, for met4, if ANY of the following is true:
+//  An entire 700x700 window is covered by cmm4 waffleDrop, and met4 < 70% for same window 
+//  80-100% of 700x700 window is covered by cmm4 waffleDrop, and met4 < 65% for same window 
+//  60-80% of 700x700 window is covered by cmm4 waffleDrop, and met4 < 60% for same window 
+//  50-60% of 700x700 window is covered by cmm4 waffleDrop, and met4 < 50% for same window
+//  40-60% of 700x700 window is covered by cmm4 waffleDrop, and met4 < 40% for same window
+//  30-40% of 700x700 window is covered by cmm4 waffleDrop, and met4 < 30% for same window
+//  Exclude cells whose are is below 40Kum**2.
+//  NOTE: Required for IP, Recommended for Chip-level.
+// *****************************************************************************************

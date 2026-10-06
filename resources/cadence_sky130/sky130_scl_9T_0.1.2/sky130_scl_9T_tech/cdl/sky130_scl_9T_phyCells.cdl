@@ -1,0 +1,58 @@
+************************************************************************
+* Library Name: sky130_scl_9T_phyCells
+* Cell Name:    ANTENNA
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT ANTENNA A VDD VSS
+*.PININFO A:I
+DD0 A VDD diode_pd2nw_05v5 1e-12 4e-06 m=1
+DD1 VSS A diode_pw2nd_05v5 0.36 2.4 m=1
+.ENDS
+
+************************************************************************
+* Library Name: sky130_scl_9T_phyCells
+* Cell Name:    FILL_DECAP16
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT FILL_DECAP16 VDD VSS
+*.PININFO
+MNM0 VSS VDD VSS VSS nfet_01v8 W=2.8u L=5.78u M=1
+.ENDS
+
+************************************************************************
+* Library Name: sky130_scl_9T_phyCells
+* Cell Name:    FILL_DECAP8
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT FILL_DECAP8 VDD VSS
+*.PININFO
+MNM0 VSS VDD VSS VSS nfet_01v8 W=2.8u L=2.1u M=1
+.ENDS
+
+************************************************************************
+* Library Name: sky130_scl_9T_phyCells
+* Cell Name:    TIEHI
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT TIEHI Y VDD VSS
+*.PININFO Y:O
+Mmp0 Y net1 VDD VDD pfet_01v8 W=1.13u L=150n M=1
+Mmn0 net1 net1 VSS VSS nfet_01v8 W=760n L=150n M=1
+.ENDS
+
+************************************************************************
+* Library Name: sky130_scl_9T_phyCells
+* Cell Name:    TIELO
+* View Name:    schematic
+************************************************************************
+
+.SUBCKT TIELO Y VDD VSS
+*.PININFO Y:O
+Mmp0 net1 net1 VDD VDD pfet_01v8 W=1.13u L=150n M=1
+Mmn0 Y net1 VSS VSS nfet_01v8 W=760n L=150n M=1
+.ENDS
+

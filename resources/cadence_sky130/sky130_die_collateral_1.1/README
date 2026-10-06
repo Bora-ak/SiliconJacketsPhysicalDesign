@@ -1,0 +1,88 @@
+====================================================================================
+Revisions
+====================================================================================
+
+sky130_die_collateral_1.0
+
+	Initial release
+	
+sky130_die_collateral_1.1
+
+	Fill blockage layers in mpw_dieid_2506ABCD_example were modified
+	cmm1 waffleDrop  -> met1 fill_block
+	cmm2 waffleDrop  -> met2 fill_block
+	cmm3 waffleDrop  -> met3 fill_block
+	cmm4 waffleDrop  -> met4 fill_block
+	cmm5 waffleDrop  -> met5 fill_block
+
+====================================================================================
+Die Prep Guidelines
+====================================================================================
+
+Customer's design shall contain and fit within a seal ring. The seal ring's bounding
+box is 3.6mm x 5.2mm and shall be placed at (0,0) in the top-level of the layout
+hierarchy, with an integrated die ID placed at (180,52).
+
+Cadence will issue an 8-character die ID and supply the necessary physical design
+collateral to support these requirements. (See below)
+
+The top-level cell in the Customer's design shall be named <designName>_<dieID>,
+where <designName> is at the Customer's discretion, and <dieID> is issued by
+Cadence (ex: cadencechip_2506ABCD). The OASIS design file shall be named in
+accordance with the previously stated requirements and compressed using
+Gzip (ex: cadencechip_2506ABCD.oas.gz).
+
+====================================================================================
+Colateral List
+====================================================================================
+
+README                       <-- This file
+sky130_die_collateral        <-- Virtuoso (OA) library
+sky130_die_collateral.gds    <-- Stream file containing all collateral
+sky130_die_collateral.oas    <-- OASIS file containing all collateral
+
+See the layout "mpw_sealring_dieid_2506ABCD_example" and create similar for
+your design.
+
+The above files contain the following layouts (use whichever is most convenient):
+
+mpw_dieid_2506ABCD_example
+mpw_sealring_dieid_2506ABCD_example
+pg_text_0
+pg_text_1
+pg_text_2
+pg_text_3
+pg_text_4
+pg_text_5
+pg_text_6
+pg_text_7
+pg_text_8
+pg_text_9
+pg_text_A
+pg_text_all
+pg_text_B
+pg_text_C
+pg_text_D
+pg_text_E
+pg_text_F
+pg_text_G
+pg_text_H
+pg_text_I
+pg_text_J
+pg_text_K
+pg_text_L
+pg_text_M
+pg_text_N
+pg_text_O
+pg_text_P
+pg_text_Q
+pg_text_R
+pg_text_S
+pg_text_T
+pg_text_U
+pg_text_V
+pg_text_W
+pg_text_X
+pg_text_Y
+pg_text_Z
+sealring_3600x5200

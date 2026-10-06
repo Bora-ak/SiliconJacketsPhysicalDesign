@@ -1,0 +1,49 @@
+// Library name: sky130_scl_9T_phyCells
+// Cell name: ANTENNA
+// View name: schematic
+subckt ANTENNA A VDD VSS
+    D0 (A VDD) diode_pd2nw_05v5 area=1e-12 pj=4e-06 m=1
+    D1 (VSS A) diode_pw2nd_05v5 area=0.36 pj=2.4 m=1
+ends ANTENNA
+// End of subcircuit definition.
+
+// Library name: sky130_scl_9T_phyCells
+// Cell name: FILL_DECAP8
+// View name: schematic
+subckt FILL_DECAP8 VDD VSS
+    NM0 (VSS VDD VSS VSS) nfet_01v8 w=(2.8u) l=2.1u \
+        as=742f ad=742f ps=6.13u pd=6.13u m=(1)*(1)
+ends FILL_DECAP8
+// End of subcircuit definition.
+
+// Library name: sky130_scl_9T_phyCells
+// Cell name: FILL_DECAP16
+// View name: schematic
+subckt FILL_DECAP16 VDD VSS
+    NM0 (VSS VDD VSS VSS) nfet_01v8 w=(2.8u) l=5.78u \
+        as=742f ad=742f ps=6.13u pd=6.13u m=(1)*(1)
+ends FILL_DECAP16
+// End of subcircuit definition.
+
+// Library name: sky130_scl_9T_phyCells
+// Cell name: TIELO
+// View name: schematic
+subckt TIELO VDD VSS Y
+    mp0 (net1 net1 VDD VDD) pfet_01v8 w=(1.13u) l=150n as=299.45f \
+        ad=299.45f ps=2.79u pd=2.79u m=(1)*(1)
+    mn0 (Y net1 VSS VSS) nfet_01v8 w=(760n) l=150n as=201.4f \
+        ad=201.4f ps=2.05u pd=2.05u m=(1)*(1)
+ends TIELO
+// End of subcircuit definition.
+
+// Library name: sky130_scl_9T_phyCells
+// Cell name: TIEHI
+// View name: schematic
+subckt TIEHI VDD VSS Y
+    mp0 (Y net1 VDD VDD) pfet_01v8 w=(1.13u) l=150n as=299.45f \
+        ad=299.45f ps=2.79u pd=2.79u m=(1)*(1)
+    mn0 (net1 net1 VSS VSS) nfet_01v8 w=(760n) l=150n as=201.4f \
+        ad=201.4f ps=2.05u pd=2.05u m=(1)*(1)
+ends TIEHI
+// End of subcircuit definition.
+

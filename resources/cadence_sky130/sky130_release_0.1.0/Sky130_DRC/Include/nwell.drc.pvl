@@ -1,0 +1,115 @@
+//////////////////////////////////////////////////////////////////
+//	  nwell rules		 				//
+// Version 0.0_2.12  July 22, 2025				//
+// DRM Section 5.7.3						//
+//////////////////////////////////////////////////////////////////
+
+rule nwell.1 {
+	caption "Width of nwell: 0.84 um"
+	inte nwell -lt 0.840 -output region
+}
+
+rule CDR.nwell.2a.lv {
+	caption "CDR: Min space/notch between two LV n-wells: 1.27 um"
+	caption "  Manual merge wells if less than minimum "
+	exte nwell_lv -lt 1.270 -notch also -single_point -output region
+}
+rule "nwell.2a.lv_hv" {
+	caption "Min space of LV_nwell to HV_nwell: 1.27"
+	exte nwell_lv nwell_hv -lt 1.27 -abut -lt 90 -single_point -output region
+}
+rule "nwell.2a.lv_vhv" {
+	caption "Min space of LV_nwell to VHV_nwell: 2.0"
+	exte nwell_lv nwell_vhv -lt 2.0 -abut -lt 90 -single_point -output region
+}
+rule "nwell.2a.lv_uhv" {
+	caption "Min space of LV_nwell to UHV_nwell: 2.5"
+	exte nwell_lv nwell_uhv -lt 2.5 -abut -lt 90 -single_point -output region
+}
+
+rule nwell.4 {
+	caption "All n-wells will contain metal-contacted tap"
+	caption "(rule checks only for licon on tap)."
+	caption "Rule exempted from high voltage cells inside UHVI"
+	caption "NOTE: exceptions have NOT been considered, there may be false errors"
+	select -enclose -not nwell tap_licon
+}
+
+rule nwell.5 {
+	caption "Deep nwell must be enclosed by nwell by atleast: 0.40 um"
+	caption "Exempted inside UHVI (layer v20) or areaid.lw"
+	caption "Nwells can merge over deep nwell if spacing too small"
+	caption "NOTE: exceptions have NOT been considered, there may be false errors"
+//	caption "areaid.lw exemption not coded, areaid.lw not in PDK or DRM"
+	inside_cell -not nwell "*_tech_CD_top" -outputlayer nwell.5_notCD
+	not dnwell uhvi -outputlayer dnwell.5
+	enc dnwell.5 nwell.5_notCD -lt 0.400 -output region
+}
+
+//rule nwell.5a {
+//	caption "min enclosure of nwell by dnwell inside UHVI"
+//	caption "No value in DRM, not coded"
+//}
+	
+//rule nwell.5b {
+//	caption "nwell inside UHVI must not be on the same net as nwell outside UHVI"
+//}
+
+rule nwell.6 {
+	caption "Min enclosure of nwell hole by deep nwell outside UHVI: 1.03 um"
+	caption "shapes in cell "*_tech_CD_top" exempted"
+	inside_cell -not nwell "*_tech_CD_top" -outputlayer nwell.6_a
+	select -outside nwell.6_a uhvi -outputlayer nwell.6_b
+	holes nwell.6_b -outputlayer nwell.6_c
+	enc nwell.6_c dnwell -lt 1.030 -output region
+}
+
+//rule nwell.7 {
+//	caption "Min spacing between nwell and deep nwell on separate nets: 4.500"
+//	caption "Spacing between nwell and deep nwell on the same net is set"
+//	caption "by the sum of the rules nwell.2 and nwell.5"
+//	caption "By default, DRC run on a cell checks for the separate-net spacing,"
+//	caption "when nwell and deep nwell nets are separate within the cell hierarchy"
+//	caption "and are joined in the upper hierarchy."
+//	caption "To allow net names to be joined and make the same-net rule applicable"
+//	caption "in this case, the joinNets switch should be turned on. waffle_chip"
+//	caption "shapes in cell "*_tech_CD_top" exempted"
+//	caption "   TBA  "
+//	inside_cell -not nwell "*_tech_CD_top" -outputlayer nwell.7_a
+//	exte nwell.7_a dnwell -lt 4.500 -not_connected -output region
+//}
+
+
+rule nwell.ntap {
+	caption "nwell must have at least one ntap"
+	select -enclose -not nwell ntap
+}
+
+// both layers 1st / 2nd so that both shapes are output
+// this will show nwell shapes connected to another nwell with a different voltage marker,
+// but it doesn't show the path !  RDB file doesn't help
+// leaving these checks out for now until a better methodology can be implemented
+// LVS should report these as stamping conflicts since the nwells will be connected to diferent pinss
+
+#IFNDEF NOWARN
+
+//  rule nwell.sameNet.1 {
+//      caption "WARNING: Different voltage nwell (LV, hvi) found on the same net"
+//      antenna nwell_lv  nwell_hv  -gt 0  // -rdb "nwell.sameNet1.rdb" -by_layer nwell_lv nwell_hv ;  }
+//  rule nwell.sameNet.2{
+//      caption "WARNING: Different voltage nwell (LV, vhvi) found on the same net"
+//      antenna nwell_lv  nwell_vhv -gt 0  }
+//  rule nwell.sameNet.3{
+//      caption "WARNING: Different voltage nwell (LV, uhvi) found on the same net"
+//      antenna nwell_lv  nwell_uhv -gt 0    }
+//  rule nwell.sameNet.4 {
+//      caption "WARNING: Different voltage nwell (hvi, vhvi) found on the same net"
+//      antenna nwell_hv  nwell_vhv -gt 0    }
+//  rule nwell.sameNet.5 {
+//      caption "WARNING: Different voltage nwell (hvi, uhvi) found on the same net"
+//      antenna nwell_hv  nwell_uhv -gt 0   }
+//  rule nwell.sameNet.6 {
+//      caption "WARNING: Different voltage nwell (vhvi, uhvi) found on the same net"
+//      antenna nwell_vhv nwell_uhv -gt 0   }
+  
+#ENDIF 	// ifndef NOWARN

@@ -1,0 +1,8 @@
+outputs/
+archives/
+scripts/synthesis/lists/
+resources/synopsys_libs/alib-*/
+*.log
+*.svf
+*.lock_flush
+.nfs*

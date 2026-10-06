@@ -1,0 +1,145 @@
+//////////////////////////////////////////////////////////////////
+//	 m3 rules			 			//
+// Version 0.0_2.12  July 22, 2025				//
+// DRM Section 5.7.27			   			//
+//////////////////////////////////////////////////////////////////
+
+// v2.10:  m3 fill rules added
+// m3_fill removed here since m3 fill rules have larger minimum value:
+//   m3_fill minimum width is 0.3 um
+//   m3_fill minimum spacing is 0.03 um 
+//   enclosure rules are not relevant since m3_fill cannot overlap via2 or via3
+//   Also, removing the fill shapes from these checks will speed processing.
+
+rule m3.1 {
+	caption "CDR: Min width of met3: 0.30 um"
+	inte m3_dg -lt 0.300 -output region
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Spacing rules:  Huge met3 and regular met3
+// 	huge_met3: met3 with width > 3.0
+//
+// See m1 rules for methodology description
+// 
+// min spacing (met3 attached to huge_met3) to met3:  0.40
+// min spacing HUGE to met3:  0.40
+// min spacing met3 to met3:  0.30  
+
+rule CDR.m3.2 {
+	caption "CDR: Min spacing/notch of met3: 0.30 um"
+	exte m3_dg -lt 0.300 -single_point -output region
+}
+
+//rule m3.3a {
+//	caption "Min spacing of features attached to or extending from huge_met3"
+//	caption "for a distance of up to 0.48 um to met3 "
+//	caption "(rule not checked over non-huge met3 features)"
+//	caption "   DRM has not values; not coded "
+//}
+
+//rule m3.3b {
+//	caption "Min spacing of huge_met3 to met3 excluding features checked by m3.3a "
+//	caption "   DRM has not values; not coded "
+//}
+
+NOT m3_dg huge_met3 met3_not_huge ;
+size huge_met3 -by 0.28  -inside_of m3_dg -outputlayer huge_met3_040
+AND met3_not_huge huge_met3_040 met3_huge_and ;
+select -touch met3_huge_and huge_met3 -outputlayer met3_touching_huge
+
+rule CDRW.m3.3c {
+	caption "CDRW: Min spacing of huge met3 (width > 3.0 um) to narrow met3,"
+	caption "including features extending 0.28 um into narrow met3: 0.40 um"
+	exte met3_touching_huge m3_dg -lt 0.40 -single_point -output region
+}
+
+rule CDRW.m3.3d {
+	caption "CDRW: Min spacing of huge_met3 to met3 excluding features checked by m3.3c: 0.40 um"
+	exte huge_met3 m3_dg -lt 0.400 -single_point -output region
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+
+
+rule CDR.m3.4 {
+	caption "CDR: Min enclosure of via2 by met3: 0.065 um"
+	enc via2 m3_dg -lt 0.065 -output region
+	edge_select -inside via2 m3_dg ;  // finds 0.0 enc 
+}
+
+//rule m3.5 {
+//	caption "via2 must be enclosed by met3 on one of two adjacent sides by at least " 
+//	caption "	N/A   "
+//}
+
+//rule m3.5a {
+//	caption "Via2 must be enclosed by met3 on all sides by at least"
+//	caption "(Rule not checked on a layout when it satisfies both rules m3.4 and m3.5)"
+//	caption "	N/A	"
+//}
+
+rule CDR.m3.6 {
+	caption "CDR: min met3 area: 0.240 sq um"
+	area m3_dg -lt 0.240
+}
+
+rule CDR.m3.7 {
+ 	caption "CDR: min area of met3 holes: 0.200 sq um"
+	holes m3_dg -outputlayer m3.7_a
+	area m3.7_a -lt 0.200
+}
+
+
+// NOTE:  rule m3.pd.1 moved to density file and renamed m3.local.min
+
+
+#IFDEF CU
+	rule m3.11 {
+	caption "Cu Flow - Max width of met3: 4.00 um"
+	with_width m3_dg -gt 4.000
+	}
+
+	rule m3.12 {
+	  caption "Cu Flow - Add slots and remove vias and contacts if met3 wider than > 3.200"
+	  with_width m3_dg -gt 3.200 ;
+	}
+
+	rule m3.15 {
+	caption "Cu Flow - via1 must be enclosed by met3 on one of two adjacent sides by at least: 0.06 um" 
+	rect_enc via1 m3_dg -good 0.060 0.000 0.060 0.000
+	}
+
+// CU met3 Density
+
+// rules m3.13, m3.14, m3.14a 
+//	 "Max pattern density (PD) of met3: 0.77"
+//	 "met3 PD window size == 50.0 um"
+//	 "met3 PD window step == 25.0 um"
+
+// These rules specify "met3" and not met3 oxide, so do not use the sized met3 
+
+  rule m3.13 {
+ 	caption "m3.13: Max pattern density (PD) of met3 (CU): 0.77"
+	caption "m3.14: met3 PD window size 5 um"
+	caption "m3.14a: met3 PD window step 25 um"
+	caption "  rdb file:  m3.13.rdb"
+	density met3 -gt 0.77 -window 50 -step 25  -rdb "m3.13.rdb"
+  }
+#ENDIF  // ifndef CU
+
+
+// *****************************************************************************************
+// met3 Recommended Chip-Level Density rules - OBSOLETE and removed
+
+//  Algorithm should flag errors, for met3, if ANY of the following is true:
+//  An entire 700x700 window is covered by cmm3 waffleDrop, and met3 < 70% for same window 
+//  80-100% of 700x700 window is covered by cmm3 waffleDrop, and met3 < 65% for same window 
+//  60-80% of 700x700 window is covered by cmm3 waffleDrop, and met3 < 60% for same window 
+//  50-60% of 700x700 window is covered by cmm3 waffleDrop, and met3 < 50% for same window
+//  40-60% of 700x700 window is covered by cmm3 waffleDrop, and met3 < 40% for same window
+//  30-40% of 700x700 window is covered by cmm3 waffleDrop, and met3 < 30% for same window
+//  Exclude cells whose are is below 40Kum**2.
+//  NOTE: Required for IP, Recommended for Chip-level.
+// *****************************************************************************************
+

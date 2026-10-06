@@ -1,0 +1,59 @@
+ 
+                             Library Compiler (TM)
+                                 DesignWare (R)
+
+                Version X-2025.06-SP3 for linux64 - Jan 15, 2026
+  This release has significant feature enhancements. Please review the Release
+                       Notes associated with this release.
+
+                    Copyright (c) 1988 - 2026 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+      Inc.  This software may only be used in accordance with the terms and
+  conditions of a written license agreement with Synopsys, Inc.  All other use,
+   reproduction, or distribution of this software is strictly prohibited.  By
+   installing, accessing, using, or executing this software, you agree that it
+  will reside on, operate within, and have access to the computers and networks
+    where such software is used ("Host System"), and that Synopsys may access
+     components and data of the Host System as necessary for it to function
+ properly, to authenticate and validate license keys, to verify that it is used
+ only in conformity with the applicable license restrictions, and to communicate
+                 error messages and associated data to Synopsys.
+
+
+Information: Term was not able to be set up using xterm-256color . Using "xterm" by default instead. (CLE-10)
+Initializing...
+lc_shell> lc_shell -c "read_lib CF_SRAM_1024x32_tt_180V_25C.lib; write_lib CF_SRAM_1024x32_tt_180V_25C -format db -output CF_SRAM_1024x32_tt_180V_25C.db"
+Error: unknown command 'lc_shell' (CMD-005)
+lc_shell> read_lib CF_SRAM_1024x32_tt_180V_25C.lib; write_lib CF_SRAM_1024x32_tt_180V_25C -format db -output CF_SRAM_1024x32_tt_180V_25C.db
+Reading '/nethome/cshaw49/SJapr/inputs/CF_SRAM_1024x32/lib/CF_SRAM_1024x32_tt_180V_25C.lib' ...
+Information: Line 53, The 'always_on' attribute for pin group is official liberty syntax/already defined, this user define syntax is ignored. (LBDB-29)
+Warning: Line 29, The 'internal_power_calculation' attribute in char_config group is required for NLPM library. 
+        No default can be applied to this attribute. (LBDB-366)
+Warning: Line 171, Cell 'CF_SRAM_1024x32', the macro cell has the switch_cell_type: coarse_grain. It is marked as dont_touch and dont_use. (LBDB-566)
+Warning: Line 183, Cell 'CF_SRAM_1024x32', pin 'DO[31]', The pin 'DO[31]' does not have a internal_power group. (LBDB-607)
+Warning: Line 758, Cell 'CF_SRAM_1024x32', pin 'ScanOutCC', The pin 'ScanOutCC' does not have a internal_power group. (LBDB-607)
+Warning: Line 1261, Cell 'CF_SRAM_1024x32', pin 'AD[9]', The pin 'AD[9]' does not have a internal_power group. (LBDB-607)
+Warning: Line 1818, Cell 'CF_SRAM_1024x32', pin 'BEN[31]', The pin 'BEN[31]' does not have a internal_power group. (LBDB-607)
+Warning: Line 2882, Cell 'CF_SRAM_1024x32', pin 'DI[31]', The pin 'DI[31]' does not have a internal_power group. (LBDB-607)
+Warning: Line 3388, Cell 'CF_SRAM_1024x32', pin 'EN', The pin 'EN' does not have a internal_power group. (LBDB-607)
+Warning: Line 3941, Cell 'CF_SRAM_1024x32', pin 'R_WB', The pin 'R_WB' does not have a internal_power group. (LBDB-607)
+Warning: Line 4499, Cell 'CF_SRAM_1024x32', pin 'ScanInCC', The pin 'ScanInCC' does not have a internal_power group. (LBDB-607)
+Warning: Line 4999, Cell 'CF_SRAM_1024x32', pin 'ScanInDL', The pin 'ScanInDL' does not have a internal_power group. (LBDB-607)
+Warning: Line 5496, Cell 'CF_SRAM_1024x32', pin 'ScanInDR', The pin 'ScanInDR' does not have a internal_power group. (LBDB-607)
+Warning: Line 5992, Cell 'CF_SRAM_1024x32', pin 'SM', The pin 'SM' does not have a internal_power group. (LBDB-607)
+Warning: Line 6481, Cell 'CF_SRAM_1024x32', pin 'TM', The pin 'TM' does not have a internal_power group. (LBDB-607)
+Warning: Line 6973, Cell 'CF_SRAM_1024x32', pin 'WLBI', The pin 'WLBI' does not have a internal_power group. (LBDB-607)
+Warning: Line 7405, Cell 'CF_SRAM_1024x32', pin 'WLOFF', The pin 'WLOFF' does not have a internal_power group. (LBDB-607)
+Warning: Line 7871, Cell 'CF_SRAM_1024x32', pin 'vpwrac', The pin 'vpwrac' does not have a internal_power group. (LBDB-607)
+Warning: Line 7886, Cell 'CF_SRAM_1024x32', pin 'vpwrpc', The pin 'vpwrpc' does not have a internal_power group. (LBDB-607)
+Information: Line 171, Cell 'CF_SRAM_1024x32', The cell 'CF_SRAM_1024x32' contains memory/memory_read/memory_write groups which are deprecated, use the is_memory_cell attribute instead. (LIBG-280)
+Technology library 'CF_SRAM_1024x32_tt_180V_25C' read successfully
+Wrote the 'CF_SRAM_1024x32_tt_180V_25C' library to '/nethome/cshaw49/SJapr/inputs/CF_SRAM_1024x32/lib/CF_SRAM_1024x32_tt_180V_25C.db' successfully
+1
+lc_shell> 
+Maximum memory usage for this session: 110.98 MB
+CPU usage for this session:      8 seconds (  0.00 hours)
+Elapsed time for this session:    158 seconds (  0.04 hours)
+Thank you for using Library Compiler.
+Memory usage for this session 110 Mbytes.
+CPU usage for this session 8 seconds ( 0.00 hours ).

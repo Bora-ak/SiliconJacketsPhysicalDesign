@@ -1,0 +1,248 @@
+/////////////////////////////////////////////////////////////
+// Created by: Synopsys DC Ultra(TM) in wire load mode
+// Version   : X-2025.06-SP3
+// Date      : Wed Aug 12 22:24:32 2026
+/////////////////////////////////////////////////////////////
+
+
+module counter ( clk, rst, count );
+  output [7:0] count;
+  input clk, rst;
+  wire   n10, n30, n9, n70, n8, n50, n7, n80, n60, n40, n20, n1, n2, n3, n4,
+         n5, n6;
+
+  DFFRX1 count_reg_0_ ( .D(n10), .CK(clk), .RN(rst), .Q(count[0]), .QN(n10) );
+  DFFRX1 count_reg_2_ ( .D(n30), .CK(clk), .RN(rst), .Q(count[2]), .QN(n9) );
+  DFFRX1 count_reg_6_ ( .D(n70), .CK(clk), .RN(rst), .Q(count[6]), .QN(n8) );
+  DFFRX1 count_reg_4_ ( .D(n50), .CK(clk), .RN(rst), .Q(count[4]), .QN(n7) );
+  DFFRX1 count_reg_7_ ( .D(n80), .CK(clk), .RN(rst), .Q(count[7]) );
+  DFFRX1 count_reg_5_ ( .D(n60), .CK(clk), .RN(rst), .Q(count[5]) );
+  DFFRX1 count_reg_3_ ( .D(n40), .CK(clk), .RN(rst), .Q(count[3]) );
+  DFFRX1 count_reg_1_ ( .D(n20), .CK(clk), .RN(rst), .Q(count[1]) );
+  CLKXOR2X1 U1 ( .A(count[0]), .B(count[1]), .Y(n20) );
+  NAND2X1 U2 ( .A(count[0]), .B(count[1]), .Y(n6) );
+  NOR2X1 U3 ( .A(n9), .B(n6), .Y(n5) );
+  NAND2X1 U4 ( .A(n5), .B(count[3]), .Y(n4) );
+  NOR2X1 U5 ( .A(n7), .B(n4), .Y(n3) );
+  CLKXOR2X1 U6 ( .A(n3), .B(count[5]), .Y(n60) );
+  CLKXOR2X1 U7 ( .A(n5), .B(count[3]), .Y(n40) );
+  NAND2X1 U8 ( .A(n3), .B(count[5]), .Y(n2) );
+  NOR2X1 U9 ( .A(n8), .B(n2), .Y(n1) );
+  CLKXOR2X1 U10 ( .A(count[7]), .B(n1), .Y(n80) );
+  AOI21X1 U11 ( .A0(n8), .A1(n2), .B0(n1), .Y(n70) );
+  AOI21X1 U12 ( .A0(n7), .A1(n4), .B0(n3), .Y(n50) );
+  AOI21X1 U13 ( .A0(n9), .A1(n6), .B0(n5), .Y(n30) );
+endmodule
+
+
+module openframe_project_wrapper ( vdda, vdda1, vdda2, vssa, vssa1, vssa2, 
+        vccd, vccd1, vccd2, vssd, vssd1, vssd2, vddio, vssio, porb_h, porb_l, 
+        por_l, resetb_h, resetb_l, mask_rev, gpio_in, gpio_in_h, gpio_out, 
+        gpio_oeb, gpio_inp_dis, gpio_ib_mode_sel, gpio_vtrip_sel, 
+        gpio_slow_sel, gpio_holdover, gpio_analog_en, gpio_analog_sel, 
+        gpio_analog_pol, gpio_dm2, gpio_dm1, gpio_dm0, analog_io, 
+        analog_noesd_io, gpio_loopback_one, gpio_loopback_zero );
+  input [31:0] mask_rev;
+  input [43:0] gpio_in;
+  input [43:0] gpio_in_h;
+  output [43:0] gpio_out;
+  output [43:0] gpio_oeb;
+  output [43:0] gpio_inp_dis;
+  output [43:0] gpio_ib_mode_sel;
+  output [43:0] gpio_vtrip_sel;
+  output [43:0] gpio_slow_sel;
+  output [43:0] gpio_holdover;
+  output [43:0] gpio_analog_en;
+  output [43:0] gpio_analog_sel;
+  output [43:0] gpio_analog_pol;
+  output [43:0] gpio_dm2;
+  output [43:0] gpio_dm1;
+  output [43:0] gpio_dm0;
+  inout [43:0] analog_io;
+  inout [43:0] analog_noesd_io;
+  input [43:0] gpio_loopback_one;
+  input [43:0] gpio_loopback_zero;
+  input porb_h, porb_l, por_l, resetb_h, resetb_l;
+  inout vdda,  vdda1,  vdda2,  vssa,  vssa1,  vssa2,  vccd,  vccd1,  vccd2, 
+     vssd,  vssd1,  vssd2,  vddio,  vssio;
+
+
+  counter mycounter ( .clk(gpio_in[0]), .rst(gpio_in[1]), .count(gpio_out[9:2]) );
+  CLKBUFX2 U1 ( .A(gpio_loopback_zero[0]), .Y(gpio_analog_pol[0]) );
+  CLKBUFX2 U2 ( .A(gpio_loopback_zero[4]), .Y(gpio_analog_pol[4]) );
+  CLKBUFX2 U3 ( .A(gpio_loopback_zero[19]), .Y(gpio_analog_pol[19]) );
+  CLKBUFX2 U4 ( .A(gpio_loopback_zero[34]), .Y(gpio_analog_pol[34]) );
+  CLKBUFX2 U5 ( .A(gpio_loopback_zero[5]), .Y(gpio_analog_sel[5]) );
+  CLKBUFX2 U6 ( .A(gpio_loopback_zero[20]), .Y(gpio_analog_sel[20]) );
+  CLKBUFX2 U7 ( .A(gpio_loopback_zero[0]), .Y(gpio_analog_en[0]) );
+  CLKBUFX2 U8 ( .A(gpio_loopback_zero[6]), .Y(gpio_analog_en[6]) );
+  CLKBUFX2 U9 ( .A(gpio_loopback_zero[21]), .Y(gpio_analog_en[21]) );
+  CLKBUFX2 U10 ( .A(gpio_loopback_zero[0]), .Y(gpio_holdover[0]) );
+  CLKBUFX2 U11 ( .A(gpio_loopback_zero[7]), .Y(gpio_holdover[7]) );
+  CLKBUFX2 U12 ( .A(gpio_loopback_zero[22]), .Y(gpio_holdover[22]) );
+  CLKBUFX2 U13 ( .A(gpio_loopback_zero[43]), .Y(gpio_analog_sel[43]) );
+  CLKBUFX2 U14 ( .A(gpio_loopback_zero[43]), .Y(gpio_analog_en[43]) );
+  CLKBUFX2 U15 ( .A(gpio_loopback_zero[43]), .Y(gpio_holdover[43]) );
+  CLKBUFX2 U16 ( .A(gpio_loopback_zero[43]), .Y(gpio_analog_pol[43]) );
+  CLKBUFX2 U17 ( .A(gpio_loopback_zero[42]), .Y(gpio_analog_sel[42]) );
+  CLKBUFX2 U18 ( .A(gpio_loopback_zero[42]), .Y(gpio_analog_en[42]) );
+  CLKBUFX2 U19 ( .A(gpio_loopback_zero[42]), .Y(gpio_holdover[42]) );
+  CLKBUFX2 U20 ( .A(gpio_loopback_zero[42]), .Y(gpio_analog_pol[42]) );
+  CLKBUFX2 U21 ( .A(gpio_loopback_zero[41]), .Y(gpio_analog_sel[41]) );
+  CLKBUFX2 U22 ( .A(gpio_loopback_zero[41]), .Y(gpio_analog_en[41]) );
+  CLKBUFX2 U23 ( .A(gpio_loopback_zero[41]), .Y(gpio_holdover[41]) );
+  CLKBUFX2 U24 ( .A(gpio_loopback_zero[41]), .Y(gpio_analog_pol[41]) );
+  CLKBUFX2 U25 ( .A(gpio_loopback_zero[40]), .Y(gpio_analog_sel[40]) );
+  CLKBUFX2 U26 ( .A(gpio_loopback_zero[40]), .Y(gpio_analog_en[40]) );
+  CLKBUFX2 U27 ( .A(gpio_loopback_zero[40]), .Y(gpio_holdover[40]) );
+  CLKBUFX2 U28 ( .A(gpio_loopback_zero[40]), .Y(gpio_analog_pol[40]) );
+  CLKBUFX2 U29 ( .A(gpio_loopback_zero[39]), .Y(gpio_analog_sel[39]) );
+  CLKBUFX2 U30 ( .A(gpio_loopback_zero[39]), .Y(gpio_analog_en[39]) );
+  CLKBUFX2 U31 ( .A(gpio_loopback_zero[39]), .Y(gpio_holdover[39]) );
+  CLKBUFX2 U32 ( .A(gpio_loopback_zero[39]), .Y(gpio_analog_pol[39]) );
+  CLKBUFX2 U33 ( .A(gpio_loopback_zero[38]), .Y(gpio_analog_sel[38]) );
+  CLKBUFX2 U34 ( .A(gpio_loopback_zero[38]), .Y(gpio_analog_en[38]) );
+  CLKBUFX2 U35 ( .A(gpio_loopback_zero[38]), .Y(gpio_holdover[38]) );
+  CLKBUFX2 U36 ( .A(gpio_loopback_zero[38]), .Y(gpio_analog_pol[38]) );
+  CLKBUFX2 U37 ( .A(gpio_loopback_zero[37]), .Y(gpio_analog_sel[37]) );
+  CLKBUFX2 U38 ( .A(gpio_loopback_zero[37]), .Y(gpio_analog_en[37]) );
+  CLKBUFX2 U39 ( .A(gpio_loopback_zero[37]), .Y(gpio_holdover[37]) );
+  CLKBUFX2 U40 ( .A(gpio_loopback_zero[37]), .Y(gpio_analog_pol[37]) );
+  CLKBUFX2 U41 ( .A(gpio_loopback_zero[36]), .Y(gpio_analog_sel[36]) );
+  CLKBUFX2 U42 ( .A(gpio_loopback_zero[36]), .Y(gpio_analog_en[36]) );
+  CLKBUFX2 U43 ( .A(gpio_loopback_zero[36]), .Y(gpio_holdover[36]) );
+  CLKBUFX2 U44 ( .A(gpio_loopback_zero[36]), .Y(gpio_analog_pol[36]) );
+  CLKBUFX2 U45 ( .A(gpio_loopback_zero[35]), .Y(gpio_analog_sel[35]) );
+  CLKBUFX2 U46 ( .A(gpio_loopback_zero[35]), .Y(gpio_analog_en[35]) );
+  CLKBUFX2 U47 ( .A(gpio_loopback_zero[35]), .Y(gpio_holdover[35]) );
+  CLKBUFX2 U48 ( .A(gpio_loopback_zero[35]), .Y(gpio_analog_pol[35]) );
+  CLKBUFX2 U49 ( .A(gpio_loopback_zero[0]), .Y(gpio_analog_sel[0]) );
+  CLKBUFX2 U50 ( .A(gpio_loopback_zero[1]), .Y(gpio_analog_sel[1]) );
+  CLKBUFX2 U51 ( .A(gpio_loopback_zero[1]), .Y(gpio_analog_en[1]) );
+  CLKBUFX2 U52 ( .A(gpio_loopback_zero[1]), .Y(gpio_holdover[1]) );
+  CLKBUFX2 U53 ( .A(gpio_loopback_zero[1]), .Y(gpio_analog_pol[1]) );
+  CLKBUFX2 U54 ( .A(gpio_loopback_zero[2]), .Y(gpio_analog_sel[2]) );
+  CLKBUFX2 U55 ( .A(gpio_loopback_zero[2]), .Y(gpio_analog_en[2]) );
+  CLKBUFX2 U56 ( .A(gpio_loopback_zero[2]), .Y(gpio_holdover[2]) );
+  CLKBUFX2 U57 ( .A(gpio_loopback_zero[2]), .Y(gpio_analog_pol[2]) );
+  CLKBUFX2 U58 ( .A(gpio_loopback_zero[3]), .Y(gpio_analog_sel[3]) );
+  CLKBUFX2 U59 ( .A(gpio_loopback_zero[3]), .Y(gpio_analog_en[3]) );
+  CLKBUFX2 U60 ( .A(gpio_loopback_zero[3]), .Y(gpio_holdover[3]) );
+  CLKBUFX2 U61 ( .A(gpio_loopback_zero[3]), .Y(gpio_analog_pol[3]) );
+  CLKBUFX2 U62 ( .A(gpio_loopback_zero[4]), .Y(gpio_analog_sel[4]) );
+  CLKBUFX2 U63 ( .A(gpio_loopback_zero[4]), .Y(gpio_analog_en[4]) );
+  CLKBUFX2 U64 ( .A(gpio_loopback_zero[4]), .Y(gpio_holdover[4]) );
+  CLKBUFX2 U65 ( .A(gpio_loopback_zero[5]), .Y(gpio_analog_en[5]) );
+  CLKBUFX2 U66 ( .A(gpio_loopback_zero[5]), .Y(gpio_holdover[5]) );
+  CLKBUFX2 U67 ( .A(gpio_loopback_zero[5]), .Y(gpio_analog_pol[5]) );
+  CLKBUFX2 U68 ( .A(gpio_loopback_zero[6]), .Y(gpio_analog_sel[6]) );
+  CLKBUFX2 U69 ( .A(gpio_loopback_zero[6]), .Y(gpio_holdover[6]) );
+  CLKBUFX2 U70 ( .A(gpio_loopback_zero[6]), .Y(gpio_analog_pol[6]) );
+  CLKBUFX2 U71 ( .A(gpio_loopback_zero[7]), .Y(gpio_analog_sel[7]) );
+  CLKBUFX2 U72 ( .A(gpio_loopback_zero[7]), .Y(gpio_analog_en[7]) );
+  CLKBUFX2 U73 ( .A(gpio_loopback_zero[7]), .Y(gpio_analog_pol[7]) );
+  CLKBUFX2 U74 ( .A(gpio_loopback_zero[8]), .Y(gpio_analog_sel[8]) );
+  CLKBUFX2 U75 ( .A(gpio_loopback_zero[8]), .Y(gpio_analog_en[8]) );
+  CLKBUFX2 U76 ( .A(gpio_loopback_zero[8]), .Y(gpio_holdover[8]) );
+  CLKBUFX2 U77 ( .A(gpio_loopback_zero[8]), .Y(gpio_analog_pol[8]) );
+  CLKBUFX2 U78 ( .A(gpio_loopback_zero[9]), .Y(gpio_analog_sel[9]) );
+  CLKBUFX2 U79 ( .A(gpio_loopback_zero[9]), .Y(gpio_analog_en[9]) );
+  CLKBUFX2 U80 ( .A(gpio_loopback_zero[9]), .Y(gpio_holdover[9]) );
+  CLKBUFX2 U81 ( .A(gpio_loopback_zero[9]), .Y(gpio_analog_pol[9]) );
+  CLKBUFX2 U82 ( .A(gpio_loopback_zero[10]), .Y(gpio_analog_sel[10]) );
+  CLKBUFX2 U83 ( .A(gpio_loopback_zero[10]), .Y(gpio_analog_en[10]) );
+  CLKBUFX2 U84 ( .A(gpio_loopback_zero[10]), .Y(gpio_holdover[10]) );
+  CLKBUFX2 U85 ( .A(gpio_loopback_zero[10]), .Y(gpio_analog_pol[10]) );
+  CLKBUFX2 U86 ( .A(gpio_loopback_zero[11]), .Y(gpio_analog_sel[11]) );
+  CLKBUFX2 U87 ( .A(gpio_loopback_zero[11]), .Y(gpio_analog_en[11]) );
+  CLKBUFX2 U88 ( .A(gpio_loopback_zero[11]), .Y(gpio_holdover[11]) );
+  CLKBUFX2 U89 ( .A(gpio_loopback_zero[11]), .Y(gpio_analog_pol[11]) );
+  CLKBUFX2 U90 ( .A(gpio_loopback_zero[12]), .Y(gpio_analog_sel[12]) );
+  CLKBUFX2 U91 ( .A(gpio_loopback_zero[12]), .Y(gpio_analog_en[12]) );
+  CLKBUFX2 U92 ( .A(gpio_loopback_zero[12]), .Y(gpio_holdover[12]) );
+  CLKBUFX2 U93 ( .A(gpio_loopback_zero[12]), .Y(gpio_analog_pol[12]) );
+  CLKBUFX2 U94 ( .A(gpio_loopback_zero[13]), .Y(gpio_analog_sel[13]) );
+  CLKBUFX2 U95 ( .A(gpio_loopback_zero[13]), .Y(gpio_analog_en[13]) );
+  CLKBUFX2 U96 ( .A(gpio_loopback_zero[13]), .Y(gpio_holdover[13]) );
+  CLKBUFX2 U97 ( .A(gpio_loopback_zero[13]), .Y(gpio_analog_pol[13]) );
+  CLKBUFX2 U98 ( .A(gpio_loopback_zero[14]), .Y(gpio_analog_sel[14]) );
+  CLKBUFX2 U99 ( .A(gpio_loopback_zero[14]), .Y(gpio_analog_en[14]) );
+  CLKBUFX2 U100 ( .A(gpio_loopback_zero[14]), .Y(gpio_holdover[14]) );
+  CLKBUFX2 U101 ( .A(gpio_loopback_zero[14]), .Y(gpio_analog_pol[14]) );
+  CLKBUFX2 U102 ( .A(gpio_loopback_zero[15]), .Y(gpio_analog_sel[15]) );
+  CLKBUFX2 U103 ( .A(gpio_loopback_zero[15]), .Y(gpio_analog_en[15]) );
+  CLKBUFX2 U104 ( .A(gpio_loopback_zero[15]), .Y(gpio_holdover[15]) );
+  CLKBUFX2 U105 ( .A(gpio_loopback_zero[15]), .Y(gpio_analog_pol[15]) );
+  CLKBUFX2 U106 ( .A(gpio_loopback_zero[16]), .Y(gpio_analog_sel[16]) );
+  CLKBUFX2 U107 ( .A(gpio_loopback_zero[16]), .Y(gpio_analog_en[16]) );
+  CLKBUFX2 U108 ( .A(gpio_loopback_zero[16]), .Y(gpio_holdover[16]) );
+  CLKBUFX2 U109 ( .A(gpio_loopback_zero[16]), .Y(gpio_analog_pol[16]) );
+  CLKBUFX2 U110 ( .A(gpio_loopback_zero[17]), .Y(gpio_analog_sel[17]) );
+  CLKBUFX2 U111 ( .A(gpio_loopback_zero[17]), .Y(gpio_analog_en[17]) );
+  CLKBUFX2 U112 ( .A(gpio_loopback_zero[17]), .Y(gpio_holdover[17]) );
+  CLKBUFX2 U113 ( .A(gpio_loopback_zero[17]), .Y(gpio_analog_pol[17]) );
+  CLKBUFX2 U114 ( .A(gpio_loopback_zero[18]), .Y(gpio_analog_sel[18]) );
+  CLKBUFX2 U115 ( .A(gpio_loopback_zero[18]), .Y(gpio_analog_en[18]) );
+  CLKBUFX2 U116 ( .A(gpio_loopback_zero[18]), .Y(gpio_holdover[18]) );
+  CLKBUFX2 U117 ( .A(gpio_loopback_zero[18]), .Y(gpio_analog_pol[18]) );
+  CLKBUFX2 U118 ( .A(gpio_loopback_zero[19]), .Y(gpio_analog_sel[19]) );
+  CLKBUFX2 U119 ( .A(gpio_loopback_zero[19]), .Y(gpio_analog_en[19]) );
+  CLKBUFX2 U120 ( .A(gpio_loopback_zero[19]), .Y(gpio_holdover[19]) );
+  CLKBUFX2 U121 ( .A(gpio_loopback_zero[20]), .Y(gpio_analog_en[20]) );
+  CLKBUFX2 U122 ( .A(gpio_loopback_zero[20]), .Y(gpio_holdover[20]) );
+  CLKBUFX2 U123 ( .A(gpio_loopback_zero[20]), .Y(gpio_analog_pol[20]) );
+  CLKBUFX2 U124 ( .A(gpio_loopback_zero[21]), .Y(gpio_analog_sel[21]) );
+  CLKBUFX2 U125 ( .A(gpio_loopback_zero[21]), .Y(gpio_holdover[21]) );
+  CLKBUFX2 U126 ( .A(gpio_loopback_zero[21]), .Y(gpio_analog_pol[21]) );
+  CLKBUFX2 U127 ( .A(gpio_loopback_zero[22]), .Y(gpio_analog_sel[22]) );
+  CLKBUFX2 U128 ( .A(gpio_loopback_zero[22]), .Y(gpio_analog_en[22]) );
+  CLKBUFX2 U129 ( .A(gpio_loopback_zero[22]), .Y(gpio_analog_pol[22]) );
+  CLKBUFX2 U130 ( .A(gpio_loopback_zero[23]), .Y(gpio_analog_sel[23]) );
+  CLKBUFX2 U131 ( .A(gpio_loopback_zero[23]), .Y(gpio_analog_en[23]) );
+  CLKBUFX2 U132 ( .A(gpio_loopback_zero[23]), .Y(gpio_holdover[23]) );
+  CLKBUFX2 U133 ( .A(gpio_loopback_zero[23]), .Y(gpio_analog_pol[23]) );
+  CLKBUFX2 U134 ( .A(gpio_loopback_zero[24]), .Y(gpio_analog_sel[24]) );
+  CLKBUFX2 U135 ( .A(gpio_loopback_zero[24]), .Y(gpio_analog_en[24]) );
+  CLKBUFX2 U136 ( .A(gpio_loopback_zero[24]), .Y(gpio_holdover[24]) );
+  CLKBUFX2 U137 ( .A(gpio_loopback_zero[24]), .Y(gpio_analog_pol[24]) );
+  CLKBUFX2 U138 ( .A(gpio_loopback_zero[25]), .Y(gpio_analog_sel[25]) );
+  CLKBUFX2 U139 ( .A(gpio_loopback_zero[25]), .Y(gpio_analog_en[25]) );
+  CLKBUFX2 U140 ( .A(gpio_loopback_zero[25]), .Y(gpio_holdover[25]) );
+  CLKBUFX2 U141 ( .A(gpio_loopback_zero[25]), .Y(gpio_analog_pol[25]) );
+  CLKBUFX2 U142 ( .A(gpio_loopback_zero[26]), .Y(gpio_analog_sel[26]) );
+  CLKBUFX2 U143 ( .A(gpio_loopback_zero[26]), .Y(gpio_analog_en[26]) );
+  CLKBUFX2 U144 ( .A(gpio_loopback_zero[26]), .Y(gpio_holdover[26]) );
+  CLKBUFX2 U145 ( .A(gpio_loopback_zero[26]), .Y(gpio_analog_pol[26]) );
+  CLKBUFX2 U146 ( .A(gpio_loopback_zero[27]), .Y(gpio_analog_sel[27]) );
+  CLKBUFX2 U147 ( .A(gpio_loopback_zero[27]), .Y(gpio_analog_en[27]) );
+  CLKBUFX2 U148 ( .A(gpio_loopback_zero[27]), .Y(gpio_holdover[27]) );
+  CLKBUFX2 U149 ( .A(gpio_loopback_zero[27]), .Y(gpio_analog_pol[27]) );
+  CLKBUFX2 U150 ( .A(gpio_loopback_zero[28]), .Y(gpio_analog_sel[28]) );
+  CLKBUFX2 U151 ( .A(gpio_loopback_zero[28]), .Y(gpio_analog_en[28]) );
+  CLKBUFX2 U152 ( .A(gpio_loopback_zero[28]), .Y(gpio_holdover[28]) );
+  CLKBUFX2 U153 ( .A(gpio_loopback_zero[28]), .Y(gpio_analog_pol[28]) );
+  CLKBUFX2 U154 ( .A(gpio_loopback_zero[29]), .Y(gpio_analog_sel[29]) );
+  CLKBUFX2 U155 ( .A(gpio_loopback_zero[29]), .Y(gpio_analog_en[29]) );
+  CLKBUFX2 U156 ( .A(gpio_loopback_zero[29]), .Y(gpio_holdover[29]) );
+  CLKBUFX2 U157 ( .A(gpio_loopback_zero[29]), .Y(gpio_analog_pol[29]) );
+  CLKBUFX2 U158 ( .A(gpio_loopback_zero[30]), .Y(gpio_analog_sel[30]) );
+  CLKBUFX2 U159 ( .A(gpio_loopback_zero[30]), .Y(gpio_analog_en[30]) );
+  CLKBUFX2 U160 ( .A(gpio_loopback_zero[30]), .Y(gpio_holdover[30]) );
+  CLKBUFX2 U161 ( .A(gpio_loopback_zero[30]), .Y(gpio_analog_pol[30]) );
+  CLKBUFX2 U162 ( .A(gpio_loopback_zero[31]), .Y(gpio_analog_sel[31]) );
+  CLKBUFX2 U163 ( .A(gpio_loopback_zero[31]), .Y(gpio_analog_en[31]) );
+  CLKBUFX2 U164 ( .A(gpio_loopback_zero[31]), .Y(gpio_holdover[31]) );
+  CLKBUFX2 U165 ( .A(gpio_loopback_zero[31]), .Y(gpio_analog_pol[31]) );
+  CLKBUFX2 U166 ( .A(gpio_loopback_zero[32]), .Y(gpio_analog_sel[32]) );
+  CLKBUFX2 U167 ( .A(gpio_loopback_zero[32]), .Y(gpio_analog_en[32]) );
+  CLKBUFX2 U168 ( .A(gpio_loopback_zero[32]), .Y(gpio_holdover[32]) );
+  CLKBUFX2 U169 ( .A(gpio_loopback_zero[32]), .Y(gpio_analog_pol[32]) );
+  CLKBUFX2 U170 ( .A(gpio_loopback_zero[33]), .Y(gpio_analog_sel[33]) );
+  CLKBUFX2 U171 ( .A(gpio_loopback_zero[33]), .Y(gpio_analog_en[33]) );
+  CLKBUFX2 U172 ( .A(gpio_loopback_zero[33]), .Y(gpio_holdover[33]) );
+  CLKBUFX2 U173 ( .A(gpio_loopback_zero[33]), .Y(gpio_analog_pol[33]) );
+  CLKBUFX2 U174 ( .A(gpio_loopback_zero[34]), .Y(gpio_analog_sel[34]) );
+  CLKBUFX2 U175 ( .A(gpio_loopback_zero[34]), .Y(gpio_analog_en[34]) );
+  CLKBUFX2 U176 ( .A(gpio_loopback_zero[34]), .Y(gpio_holdover[34]) );
+endmodule
+
