@@ -110,7 +110,7 @@ To run it, we run `tclsh greeting.tcl`:
 Hello, John!
 ```
 
-To learn more about TCL, see [this resource](https://www.tcl.tk/man/tcl8.5/tutorial/tcltutorial.html).
+To learn more about TCL, see [this resource](https://www.tcl-lang.org/man/tcl8.5/tutorial/tcltutorial.html).
 
 [Here is a tutorial](https://www.tutorialspoint.com/tcl-tk/tcl_environment.htm) on how you could set up an environment and play around with TCL by writing simple scripts.
 </p>
