@@ -257,7 +257,7 @@ Before you run the flow to completion, we will briefly find a command to report 
 
 **2.4a: Reporting Utilization**
 
-Find a command that reports utilization in legacy Innovus using the methodspreviously described for finding Innovus commands. Its output should look something like this:
+Find a command that reports utilization in legacy Innovus using the methods previously described for finding Innovus commands. Its output should look something like this:
 
 ```
 Checking Preroutes.....
