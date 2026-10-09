@@ -362,7 +362,7 @@ In this case, we do not know how to locate where the clock gates were instantiat
 Part of the PDK includes our liberty file, which defines timing information for the cells that we use in our design. One such library is located at 
 
 ```
-resources/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T/lib/sky130_sky130_tt_1.8_25_nldm.lib
+resources/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T/lib/sky130_tt_1.8_25_nldm.lib
 ```
 
 **4.2a:** Open this file and find the names of all the clock gates. List the names. What are they prefixed by?
@@ -440,7 +440,9 @@ Provide a screenshot of the Cadence Pegasus GUI reporting DRC violations in your
 
 > In general, your design isn't considered manufacturable unless it has 0 DRC violations. Fixing DRC violations can vary wildly in difficulty depending on the specific violation; thus, getting a DRC clean design is not required for your submission. You are, however, *highly* encouraged to explore DRC fixes and sign off your design.
 
-**6.2:** Provide a screenshot of the Cadence Pegasus GUI showing reporting your design as LVS clean. Your design should be visible in the Virtuoso GUI in the background.
+**6.2:** 
+
+Provide a screenshot of the Cadence Pegasus GUI showing reporting your design as LVS clean. Your design should be visible in the Virtuoso GUI in the background.
 
 > Similar to DRC, you definitely don't want to manufacture a design with LVS violations (it probably won't work). You probably won't get LVS violations, but we will still accept your submission if you do. Feel free to debug and clean your design on your own time though!
 
