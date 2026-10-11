@@ -86,7 +86,7 @@ def find_modules():
             
             
 
-import_regex        = re.compile(r'^import (\S+)::.*', re.MULTILINE)
+import_regex        = re.compile(r'^([ \t]*)import (\S+)::.*', re.MULTILINE)
 include_regex       = re.compile(r'^`include "(\S+)\.(\S+)"', re.MULTILINE)
 
 def parse_file_for_dependences(filepath):

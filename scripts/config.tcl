@@ -6,7 +6,7 @@ namespace eval ::config {
 variable DESIGN 						chip_top	
 variable CLOCK_PERIOD				5.0			;# ns
 # relative to sjapr root
-variable RTL_SEARCH_SUBDIRS	[ list "inputs/rtl/src/verilog" ]
+variable RTL_SEARCH_SUBDIRS	[ list "inputs/rtl/" ]
 
 #=============================================================================#
 #                        Environment Configuration														#
