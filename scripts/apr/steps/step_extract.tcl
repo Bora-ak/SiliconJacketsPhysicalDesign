@@ -35,6 +35,9 @@ do_extract_model $::config::DBS_DIR/${::config::DESIGN}.lib -view typical_analys
 # ===== Save GDS  ===== #
 streamOut $::config::DBS_DIR/${::config::DESIGN}.gds -mapFile $::config::RESOURCES/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T/gds/sky130_stream.mapFile -libName $::config::DESIGN -units 1000 -mode ALL
 
+streamOut $::config::DBS_DIR/${::config::DESIGN}.merged.gds -mapFile $::config::RESOURCES/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T/gds/sky130_stream.mapFile -libName $::config::DESIGN -units 1000 -mode ALL \
+  -merge [list $::config::INPUTS/CF_SRAM_1024x32/gds/CF_SRAM_1024x32.gds]
+
 # ===== Save Netlist ===== #
 saveNetlist $::config::DBS_DIR/${::config::DESIGN}_pnr.v -excludeLeafCell
 saveNetlist $::config::DBS_DIR/${::config::DESIGN}.phy.v \
