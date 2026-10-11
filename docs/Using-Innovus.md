@@ -16,9 +16,9 @@ This document contains the following guides:
 
 3. Enter the C shell by running `tcsh`.
 4. Run `source envsetup` to set up the environment variables necessary to use Cadence tools.
-5. Run `innovus -stylus` to launch the Innovus GUI.
+5. Run `innovus -legacy_ui` to launch the Innovus GUI.
 
-> **Note:** There are two versions of Innovus — the legacy version, and Stylus. Most industry flows use the legacy version, but we use Stylus, the newer version. This is why we pass the flag `-stylus` when we launch Innovus. This distinction is important, since the CLI commands for the legacy and Stylus versions are different.
+> **Note:** There are two versions of Innovus — the legacy version, and Stylus. Most industry flows use the legacy version, and so do we. This is why we pass the flag `-legacy_ui` when we launch Innovus (the same flag the flow uses in `scripts/SJapr`). This distinction is important, since the CLI commands for the legacy and Stylus versions are different.
 
 ## Viewing a Design in Innovus
 
@@ -37,39 +37,39 @@ There are three ways to open a design in Innovus:
 
 1. [Launch the Innovus GUI](#launching-the-innovus-gui).
 
-2. In the terminal where you ran `innovus -stylus`, run the following command:
+2. In the terminal where you ran `innovus -legacy_ui`, run the following command:
 ```bash
-read_db <path-to-db-folder>/<design-step-output>
+restoreDesign <path-to-db-folder>/<design-step-output>.enc.dat <top-module-name>
 ```
-Where `<design-step-output>` is a `.enc`, `.cdb`, or `.db` directory.
+Where `<design-step-output>.enc.dat` is the directory written by `saveDesign`, and `<top-module-name>` is the name of your top-level design.
 
 For example:
 ```bash
-@innovus 1> pwd
+innovus 1> pwd
 /nethome/user/Physical-Design-Onboarding-Project/RTL2GDS/design
-@innovus 2> read_db dbs/postroute.enc
+innovus 2> restoreDesign dbs/postroute.enc.dat <top-module-name>
 ``` 
 This will open the design output by the postroute step of the flow.
 
-We can also view the design at other stages of the flow, with, for example, `floorplan.enc` or `syn_opt.cdb`.
+We can also view the design at other stages of the flow, with, for example, `floorplan.enc.dat`.
 
-**To open a design as a launch paramter:**
+**To open a design as a launch parameter:**
 
-We can open Innovus with a design preloaded. To do this, [launch the Innovus GUI](#launching-the-innovus-gui), but instead of using `innovus -stylus`, use `innovus -stylus -db <path-to-db-folder>/<design-step-output>`.
+We can open Innovus with a design preloaded. To do this, [launch the Innovus GUI](#launching-the-innovus-gui), but instead of using `innovus -legacy_ui`, use `innovus -legacy_ui -init <path-to-db-folder>/<design-step-output>.enc`.
 
-Where `<design-step-output>` is a `.enc`, `.cdb`, or `.db` directory.
+Where `<design-step-output>.enc` is the restore script written by `saveDesign` alongside the `.enc.dat` directory.
 
 For example:
 
 ```bash
-user@linlab> pwd
+user@rschsrv> pwd
 /nethome/user/Physical-Design-Onboarding-Project/RTL2GDS/design
-user@linlab> innovus -stylus -db dbs/postroute.enc
+user@rschsrv> innovus -legacy_ui -init dbs/postroute.enc
 ``` 
 
 This will open the design output by the postroute step of the flow.
 
-We can also view the design at other stages of the flow, with, for example, `floorplan.enc` or `syn_opt.cdb`.
+We can also view the design at other stages of the flow, with, for example, `floorplan.enc.dat`.
 
 **To open a design with the GUI:**
 
