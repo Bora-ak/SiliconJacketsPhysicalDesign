@@ -110,7 +110,7 @@ To run it, we run `tclsh greeting.tcl`:
 Hello, John!
 ```
 
-To learn more about TCL, see [this resource](https://www.tcl.tk/man/tcl8.5/tutorial/tcltutorial.html).
+To learn more about TCL, see [this resource](https://www.tcl-lang.org/man/tcl8.5/tutorial/tcltutorial.html).
 
 [Here is a tutorial](https://www.tutorialspoint.com/tcl-tk/tcl_environment.htm) on how you could set up an environment and play around with TCL by writing simple scripts.
 </p>
@@ -257,7 +257,7 @@ Before you run the flow to completion, we will briefly find a command to report 
 
 **2.4a: Reporting Utilization**
 
-Find a command that reports utilization in legacy Innovus using the methodspreviously described for finding Innovus commands. Its output should look something like this:
+Find a command that reports utilization in legacy Innovus using the methods previously described for finding Innovus commands. Its output should look something like this:
 
 ```
 Checking Preroutes.....
@@ -438,9 +438,13 @@ Follow the guide for running DRC and LVS in `docs/`.
 
 Provide a screenshot of the Cadence Pegasus GUI reporting DRC violations in your design. Your design should be visible in the Virtuoso GUI in the background.
 
+Please provide some brief explanations for any errors reported in your design.
+
 > In general, your design isn't considered manufacturable unless it has 0 DRC violations. Fixing DRC violations can vary wildly in difficulty depending on the specific violation; thus, getting a DRC clean design is not required for your submission. You are, however, *highly* encouraged to explore DRC fixes and sign off your design.
 
 **6.2:** Provide a screenshot of the Cadence Pegasus GUI showing reporting your design as LVS clean. Your design should be visible in the Virtuoso GUI in the background.
+
+Please provide some brief explanations for any errors reported in your design.
 
 > Similar to DRC, you definitely don't want to manufacture a design with LVS violations (it probably won't work). You probably won't get LVS violations, but we will still accept your submission if you do. Feel free to debug and clean your design on your own time though!
 
