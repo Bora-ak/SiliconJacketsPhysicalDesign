@@ -51,7 +51,6 @@ set ::alib_library_analysis_path $::LIB_DBS_PATH
 # ============ #
 #set CF_SRAM_1024x32_tt_180V_25C_NAME "CF_SRAM"
 set CF_SRAM_1024x32_tt_180V_25C_DB "${::config::DESIGN_ROOT}/inputs/CF_SRAM_1024x32/db/CF_SRAM_1024x32_tt_180V_25C.db"
-set CF_SRAM_8192x32__min_tt_025C_1v80_DB "${::config::DESIGN_ROOT}/inputs/CF_SRAM_8192x32/CF_SRAM_8192x32__min_tt_025C_1v80.db"
 
 # TODO ^^^^^ COPY IF USING NEW MACROS
 
@@ -95,4 +94,3 @@ set_min_library $::LIB_SS_DB -min_version $::LIB_FF_DB
 #  set ::link_library "$link_library $sram_1024w_140b_LIB_NC_DB"
 
 set ::link_library "$::link_library $CF_SRAM_1024x32_tt_180V_25C_DB"
-set ::link_library "$::link_library $CF_SRAM_8192x32__min_tt_025C_1v80_DB"

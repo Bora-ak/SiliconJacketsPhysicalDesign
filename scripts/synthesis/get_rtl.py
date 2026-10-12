@@ -98,7 +98,7 @@ def parse_file_for_dependences(filepath):
     
     # add imported modules to dependencies
     for match in import_regex.finditer(file_contents):
-        matchname = match.group(1)
+        matchname = match.group(2)
         if matchname in modules:
             import_dependencies.append(modules[matchname])
         else:
