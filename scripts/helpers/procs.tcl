@@ -183,3 +183,17 @@ proc sj_run_remaining {} {
 		}
 	}
 }
+
+# Return total negative setup slack across reported timing paths
+proc get_tns {} {
+    set tns 0.0
+    set paths [report_timing -collection -max_paths 100000]
+
+    foreach slack [get_db $paths .slack] {
+        if {$slack < 0.0} {
+            set tns [expr {$tns + $slack}]
+        }
+    }
+
+    return $tns
+}
