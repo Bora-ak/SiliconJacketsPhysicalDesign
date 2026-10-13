@@ -25,3 +25,6 @@ checkPlace $::config::RPT_DIR/$::config::DESIGN.checkPlace
 
 # TODO 2.3b
 # report utilization
+
+# Report utilization after standard-cell placement
+redirect util.txt { checkFPlan -reportUtil }
