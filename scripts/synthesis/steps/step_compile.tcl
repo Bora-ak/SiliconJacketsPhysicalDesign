@@ -18,7 +18,7 @@ if {$::config::WITH_DC_ULTRA} {
   if {$::config::DFT} {
     compile_ultra -scan -no_autoungroup -no_boundary_optimization
   } else {
-    compile_ultra       -no_autoungroup -no_boundary_optimization
+    compile_ultra -gate_clock -no_autoungroup -no_boundary_optimization
   }
   optimize_netlist -area
 } else {
