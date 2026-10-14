@@ -12,6 +12,7 @@ set ::init_pwr_net {VDD}
 set ::init_lef_file [list \
     "$::config::RESOURCES/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T_tech/lef/sky130_scl_9T.tlef" \
     "$::config::RESOURCES/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T/lef/sky130_scl_9T.lef" \
+    "$::config::RESOURCES/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T_HS/lef/sky130_scl_9T_HS.lef" \
     "$::config::RESOURCES/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T_tech/lef/sky130_scl_9T_phyCells.lef" \
     "$::config::INPUTS/CF_SRAM_1024x32/lef/CF_SRAM_1024x32.lef" \
 ]
