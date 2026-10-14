@@ -18,6 +18,18 @@ set ::alib_library_analysis_path $::LIB_DBS_PATH
 	set ::LIB_SS_NAME   "sky130_ss_1.62_125"
 	set ::LIB_SS_DB 		"$::LIB_DBS_PATH/$::LIB_SS_NAME.db"
 
+	# high-speed best case library
+	set ::HS_LIB_FF_NAME "HS_sky130_ff_1.98_0"
+	set ::HS_LIB_FF_DB "$::LIB_DBS_PATH/$::HS_LIB_FF_NAME.db"
+
+	# high-speed typical case library
+	set ::HS_LIB_TT_NAME "HS_sky130_tt_1.8_25"
+	set ::HS_LIB_TT_DB "$::LIB_DBS_PATH/$::HS_LIB_TT_NAME.db"
+
+	# high-speed worst case library
+	set ::HS_LIB_SS_NAME "HS_sky130_ss_1.62_125"
+	set ::HS_LIB_SS_DB "$::LIB_DBS_PATH/$::HS_LIB_SS_NAME.db"
+
 
 	# Operating Conditions (used in step_environment.tcl)
   set ::LIB_FF_OPCON  "ff_1.98_0"
@@ -71,8 +83,8 @@ set search_path ""
 set search_path "${::LIB_PATH}/symbols/synopsys $search_path" ; ## mysterious and confusing
 set search_path "${::LIB_PATH}/synopsys $search_path" ; ## as above
 
-set ::target_library $::LIB_TT_DB
-set ::link_library   "$::LIB_TT_DB $::LIB_SS_DB $::LIB_FF_DB"
+set ::target_library "$::LIB_TT_DB $::HS_LIB_TT_DB"
+set ::link_library   "$::LIB_TT_DB $::HS_LIB_TT_DB $::LIB_SS_DB $::HS_LIB_SS_DB $::LIB_FF_DB $::HS_LIB_FF_DB"
 
 # silence clock gating warnings by avoiding these cells
 # TODO: revist if DFT is enabled
@@ -85,6 +97,7 @@ set_dont_use [get_lib_cells */SDFF*]
 # is the lib     |     for min delay       |
 # 							 v		 (hold timing)       v
 set_min_library $::LIB_SS_DB -min_version $::LIB_FF_DB
+set_min_library $::HS_LIB_SS_DB -min_version $::HS_LIB_FF_DB
 
 ## left as example
 #=======#
